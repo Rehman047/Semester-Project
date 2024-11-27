@@ -29,20 +29,24 @@ void print(){
         cout<<"No record added yet.";
         return;
     }else{
-   
+   int delch=2;;
     cout<<"Reg Number | \tName\n";
     
     for(int j=0;j<=i-1;j++){
         
 
-     if(j<=ddd){
-    if(store[j].reg_no==drecords[j]){
+    for(int z=0;z<=ddd;z++){
+    if(store[j].reg_no==drecords[z]&&j<=ddd){
      cout<<"Record just Deleted!\n";
-     continue;}}
      
+     delch=1;
+     
+     }
+    
+    }
+    if(delch!=1)
     cout<<store[j].reg_no<<"    | \t"<<store[j].name<<endl;
-    
-    
+    delch++;
     }
     }   }
 
@@ -59,6 +63,7 @@ void deletez(int &ddd){
     cout<<"Record Deleted! ";
 
 }
+
 
 int main(){
 
