@@ -3,7 +3,7 @@ using namespace std;
 struct Student{
     int reg_no=2025000;
     string name;
-
+    unsigned int phone;
 
 
 };
@@ -16,10 +16,11 @@ struct Student{
     int daj;
 void add(){
     Student S1;
-    cout<<"Enter the name of student : ";
+    cout<<"Enter the name of Student : ";
 
     cin>>store[i].name;
-    
+    cout<<"Enter the Student's contact number : ";
+    cin>>store[i].phone;
     store[i].reg_no+=i+1;
     i++;
     cout<<"Record added successfully";
@@ -31,7 +32,7 @@ void print(){
         return;
     }else{
    int delch=2;;
-    cout<<"Reg Number | \tName\n";
+    cout<<"Reg Number |\tName\t |\tContact\n";
     
     for(int j=0;j<=i-1;j++){
         
@@ -46,7 +47,7 @@ void print(){
     
     }
     if(delch!=1)
-    cout<<store[j].reg_no<<"    | \t"<<store[j].name<<endl;
+    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<endl;
     delch++;
     }
     }   
@@ -93,25 +94,28 @@ void search(){
         cout<<"\nInvalid Reg Number. Enter Again";
         cin>>regno;
     }else { regno+=2025000;
-        for(int z=0;z<=ddd;z++){
-            if(regno==store[z].reg_no&&store[z].reg_no!=drecords[z]){
-                cout<<"Reg Number | \tName\n";
-                cout<<store[z].reg_no<<"    | \t"<<store[z].name<<endl;
-                reg=7;
+        for(int z=0;z<=i-1;z++){
+            
+            
+            for(int dc=0;dc<=ddd;dc++){
+                if(regno==drecords[dc]){
+                    cout<<"Deleted\n";
+                    return;
+                }
             }
-        } if(reg==8)
+                if(regno==store[z].reg_no){
+                    
+                cout<<"Reg Number |\tName\t |\tContact\n";
+                cout<<store[z].reg_no<<"    |    "<<store[z].name<<"\t |\t"<<store[z].phone<<endl;
+                reg=7;
+                }
+            }
+         if(reg==8)
         cout<<"No record Found! ";
     }
-
-    
-
-    
 }
 
-
-
 int main(){
-
 
 char in;
 do {
