@@ -14,6 +14,12 @@ struct Student{
     int drecords[100];
     int ddd=0;
     int daj;
+
+int digcheck(int n){
+    if (n==0)
+    return 0;
+    return 1+digcheck(n/10);
+}
 void add(){
     Student S1;
     cout<<"Enter the name of Student : ";
@@ -21,6 +27,11 @@ void add(){
     cin>>store[i].name;
     cout<<"Enter the Student's contact number : ";
     cin>>store[i].phone;
+    while(digcheck(store[i].phone)!=5){
+        cout<<"Phone Number should be 5 digits only\nEnter Phone Number Again : ";
+        cin>>store[i].phone;
+
+    }
     store[i].reg_no+=i+1;
     i++;
     cout<<"Record added successfully";
@@ -31,6 +42,7 @@ void print(){
         cout<<"No record added yet.";
         return;
     }else{
+        
    int delch=2;;
     cout<<"Reg Number |\tName\t |\tContact\n";
     
@@ -71,15 +83,7 @@ void deletez(int &ddd){
     cout<<"Record Deleted! ";
     }
 }
-int digcheck(int n){
-    int a=n;
-    int num=0;
-    while(a!=0){
-        a=a/10;
-        num++;
-    }
-    return num;
-}
+
 void search(){
     int reg,regno;
     reg=8;
@@ -90,10 +94,11 @@ void search(){
     cout<<"Enter Reg Number only last three digits : ";
     cin>>regno;
     if(digcheck(regno)>3){
-        while(digcheck(regno)>3)
-        cout<<"\nInvalid Reg Number. Enter Again";
-        cin>>regno;
-    }else { regno+=2025000;
+        while(digcheck(regno)>3){
+        cout<<"Invalid Reg Number. Enter Again : ";
+        cin>>regno;}
+    } 
+    regno+=2025000;
         for(int z=0;z<=i-1;z++){
             
             
@@ -112,7 +117,7 @@ void search(){
             }
          if(reg==8)
         cout<<"No record Found! ";
-    }
+    
 }
 
 int main(){
