@@ -1,4 +1,6 @@
 #include<iostream>
+#include<fstream>
+#include<string>
 using namespace std;
 struct Student{
     int reg_no=2025000;
@@ -14,7 +16,7 @@ struct Student{
     int drecords[100];
     int ddd=0;
     int daj;
-
+    fstream file;
 int digcheck(int n){
     if (n==0)
     return 0;
@@ -27,8 +29,8 @@ void add(){
     cin>>store[i].name;
     cout<<"Enter the Student's contact number : ";
     cin>>store[i].phone;
-    while(digcheck(store[i].phone)!=5){
-        cout<<"Phone Number should be 5 digits only\nEnter Phone Number Again : ";
+    while(digcheck(store[i].phone)!=3){
+        cout<<"Phone Number should be 3 digits only\nEnter Phone Number Again : ";
         cin>>store[i].phone;
 
     }
@@ -104,7 +106,7 @@ void search(){
             
             for(int dc=0;dc<=ddd;dc++){
                 if(regno==drecords[dc]){
-                    cout<<"Deleted\n";
+                    cout<<"Deleted";
                     return;
                 }
             }
@@ -119,16 +121,48 @@ void search(){
         cout<<"No record Found! ";
     
 }
+void download(){
+     file.open("database.txt",ios::out);
+    if (i==0){
+        cout<<"No record added yet.";
+        return;
+    }else{
+        
+   int delch=2;;
+    file<<"Reg Number |\tName\t |\tContact\n";
+    
+    for(int j=0;j<=i-1;j++){
+        
+
+    for(int z=0;z<=ddd;z++){
+    if(store[j].reg_no==drecords[z]&&j<=ddd){
+     //cout<<"Record just Deleted!\n";
+     
+     delch=1;
+     
+     }
+    
+    }
+    if(delch!=1)
+    file<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<endl;
+    delch++;
+    }
+    }   
+    cout<<"File Created Successfully! ";
+    file.close();
+}
 
 int main(){
 
 char in;
 do {
-cout<<"\nWelcome to the Student Database Management System\nEnter A to add record of student\n";
-cout<<"Enter P to see all student records\nEnter D to delete record\nEnter S to search for a specific student's record\nEnter E to exit\n: ";
+cout<<"\nWelcome to the Student Database Management System !!!\nEnter A to add record of student\n";
+cout<<"Enter P to see all student records\nEnter D to delete record\n";
+cout<<"Enter S to search for a specific student's record\n";
+cout<<"Enter I to install information\nEnter E to exit\n: ";
 cin>>in;
-while(in!='A' && in !='P' && in!='E' && in!='D' && in!='S'){
-    cout<<"Enter valid character Amongst A,P,E,S,D : ";
+while(in!='A' && in !='P' && in!='E' && in!='D' && in!='S'&& in!='I'){
+    cout<<"Enter valid character Amongst A,P,E,S,I,D : ";
     cin>>in;
 }
 
@@ -142,6 +176,8 @@ else if(in=='D')
 deletez(ddd);
 else if(in=='S')
 search();
+else if(in=='I')
+download();
 else
 cout<<"Invalid";
 } while (in!='E');
