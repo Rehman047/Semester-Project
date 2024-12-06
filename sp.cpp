@@ -6,7 +6,7 @@ struct Student{
     int reg_no=2025000;
     string name;
     unsigned int phone;
-
+    
 
 };
 
@@ -19,7 +19,7 @@ struct Student{
     fstream file;
 
 void lineprint(){
-    cout<<"_______________________________________________________________";
+    cout<<"\n_______________________________________________________________";
 
 }
 int digcheck(int n){
@@ -35,14 +35,16 @@ void deletez(int &ddd){
     cout<<"Enter the REG.No ( Only last three digits ) :  ";
     int del;
     cin>>del;
-    if(del>i){
-        cout<<"Invalid REG . No";
-    }else{
+    while(del>i||del==0){
+        cout<<"Invalid Registration Number\nEnter Again : ";
+        cin>>del;
+    }
+    
     del+=2025000;
     drecords[ddd]=del;
     ddd++;
     cout<<"Record Deleted! ";
-    }
+    
 }
 void add(){
     Student S1;
@@ -69,14 +71,14 @@ void print(){
     
     lineprint();
    int delch=1;
-    cout<<"\nReg Number |\tName\t |\tContact\n";
+    cout<<"\nReg Number |\tName\t |\tContact";
     lineprint();
     cout<<endl;
     for(int j=0;j<=i-1;j++){
         
        delch=1;
     for(int z=0;z<=ddd;z++){
-    if(store[j].reg_no==drecords[z]&&j<=ddd){
+    if(store[j].reg_no==drecords[z]){
      cout<<"Record just Deleted!\n";
      
      delch=0;
@@ -85,10 +87,10 @@ void print(){
     
     }
     if(delch)
-    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<endl;
+    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone;
     
     }
-    lineprint();
+    
     }   
     
     }
@@ -146,7 +148,7 @@ void download(){
         
 
     for(int z=0;z<=ddd;z++){
-    if(store[j].reg_no==drecords[z]&&j<=ddd){
+    if(store[j].reg_no==drecords[z]){
      //cout<<"Record just Deleted!\n";
      
      delch=1;
@@ -170,41 +172,46 @@ void del_rec(){
         return;
     }else{
     lineprint();
-   int delch=2;
-    cout<<"Reg Number |\tName\t |\tContact\n";
+   int delch=1;
+    cout<<"\nReg Number |\tName\t |\tContact\n";
     
     for(int j=0;j<=i-1;j++){
         
-        int delch=2;
+        delch =1;
     for(int z=0;z<=ddd;z++){
-    if(store[j].reg_no==drecords[z]&&j<=ddd){
-     cout<<"Record just Deleted!\n";
+    if(store[j].reg_no==drecords[z]){
+     //cout<<"Record just Deleted!\n";
      
-     delch=1;
+     delch=0;
      
      }
     
     }
-    if(delch==1)
-    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<endl;
-    delch++;
+    if(!delch)
+    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone;
+    
     }
-    lineprint();
+    
     }   
     
 }
-
-int main(){
-lineprint();
-char in;
-do {
-cout<<"\nWelcome to the Student Database Management System !!!\nEnter A to add record of student\n";
+void options(){
+cout<<"\nEnter A to add record of student\n";
 cout<<"Enter P to see all student records\nEnter D to delete record\n";
 cout<<"Enter S to search for a specific student's record\nEnter X to see all deleted records\n";
-cout<<"Enter I to install information\nEnter E to exit\n: ";
+cout<<"Enter I to install information\nEnter E to exit";
+}
+
+int main(){
+
+char in;
+do {
+lineprint();
+cout<<"\nWelcome to the Student Database Management System !!!\nEnter O to view available options for input\n";
+cout<<"Enter Input : ";
 cin>>in;
-while(in!='A' && in !='P' && in!='E' && in!='D' && in!='S'&& in!='I' &&in!='X'){
-    cout<<"Enter valid character Amongst A,P,E,S,I,D,X : ";
+while(in!='A' && in !='P' && in!='E' && in!='D' && in!='S'&& in!='I' &&in!='X'&&in!='O'){
+    cout<<"Enter valid character Amongst A,P,E,S,I,D,X,O : ";
     cin>>in;
 }
 
@@ -222,6 +229,8 @@ else if(in=='I')
 download();
 else if(in=='X')
 del_rec();
+else if(in=='O')
+options();
 else
 cout<<"Invalid";
 } while (in!='E');
