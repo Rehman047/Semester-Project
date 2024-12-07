@@ -87,7 +87,7 @@ void print(){
     
     }
     if(delch)
-    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone;
+    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<endl;
     
     }
     
@@ -133,12 +133,12 @@ void search(){
     
 }
 void download(){
-     file.open("database.txt",ios::out);
+     
     if (i==0){
         cout<<"No record added yet.";
         return;
     }else{
-        
+    file.open("database.txt",ios::out);
    int delch=2;
    file<<"_______________________________________________________________";
 
@@ -188,7 +188,7 @@ void del_rec(){
     
     }
     if(!delch)
-    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone;
+    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<endl;
     
     }
     
@@ -204,35 +204,35 @@ cout<<"Enter I to install information\nEnter E to exit";
 
 int main(){
 
-char in;
+string in;
 do {
 lineprint();
 cout<<"\nWelcome to the Student Database Management System !!!\nEnter O to view available options for input\n";
 cout<<"Enter Input : ";
 cin>>in;
-while(in!='A' && in !='P' && in!='E' && in!='D' && in!='S'&& in!='I' &&in!='X'&&in!='O'){
+while(in!="A" && in !="P" && in!="E" && in!="D" && in!="S"&& in!="I" &&in!="X"&&in!="O"){
     cout<<"Enter valid character Amongst A,P,E,S,I,D,X,O : ";
     cin>>in;
 }
 
-if (in=='A')
+if (in=="A")
 add();
-else if(in=='P')
+else if(in=="P")
 print();
-else if (in=='E')
+else if (in=="E")
 return 0;
-else if(in=='D')
+else if(in=="D")
 deletez(ddd);
-else if(in=='S')
+else if(in=="S")
 search();
-else if(in=='I')
+else if(in=="I")
 download();
-else if(in=='X')
+else if(in=="X")
 del_rec();
-else if(in=='O')
+else if(in=="O")
 options();
 else
 cout<<"Invalid";
-} while (in!='E');
+} while (in!="E");
 
 }
