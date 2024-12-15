@@ -105,47 +105,76 @@ void edit(){
             cout<<"Invalid Reg. Number. Enter Again : ";
             cin>>regn;
         }
+        
+
+        regn+=2025000;
+    for(int j=0;j<=i-1;j++){
+        
+       edch=1;
+    for(int z=0;z<=ddd;z++){
+    if(store[j].reg_no==drecords[z]){
+     cout<<"Record just Deleted!\n";
+     return;
+    edch=0;
+     }
+    }
+    if(edch){
         cout<<"Enter the name of field to change : ";
         cin>>inp;
         while(inp!="Name"&& inp!="Contact"&&inp!="Faculty"&&inp!="Degree"){
             cout<<"Invalid Field. Enter again : ";
             cin>>inp;
         }
-
-        regn+=2025000;
-      for(int j=0;j<=i-1;j++){
-        
-       edch=1;
-    for(int z=0;z<=ddd;z++){
-    if(store[j].reg_no==drecords[z]){
-     cout<<"Record just Deleted!\n";
-    edch=0;
-     }
-    }
-    if(edch){
-
         if(store[j].reg_no==regn){
             regn-=2025000;
             regn-=1;
             if(inp=="Name"){
     cout<<"Enter the name of Student : ";
     cin>>store[regn].name;
-    cout<<"Record edited successfully !!! ";
+    //cout<<"Record edited successfully !!! ";
     }else if(inp=="Contact"){
     cout<<"Enter the Student's contact number : ";
     cin>>store[regn].phone;
-    else if(inp=="Faculty"){
-    cout<<"Enter the Student's faculty : ";
-    cin>>store[regn].faculty;
-    else if(inp=="Degree"){
-    cout<<"Enter the Student's degree : ";
-    cin>>store[regn].degree;
-    while(digcheck(store[regn].phone)!=3){
+     while(digcheck(store[regn].phone)!=3){
         cout<<"Phone Number should be 3 digits only\nEnter Phone Number Again : ";
         cin>>store[regn].phone;}
-        cout<<"Record edited successfully !!! ";
+    }
+    else if(inp=="Faculty"){
+    cout<<"Enter the Student's Faculty e.g. (FCSE,FMCE,FES,FME) : ";
+    cin>>store[regn].faculty;
+    while(store[regn].faculty!="FCSE"&&store[regn].faculty!="FMCE"&&store[regn].faculty!="FES"&&store[regn].faculty!="FME"){
+        cout<<"Invalid Faculty. Enter again : ";
+        cin>>store[regn].faculty;
+    }} if(inp=="Degree"||inp=="Faculty"){
+    if(store[regn].faculty=="FCSE"){
+        cout<<"Enter degree. (CS or SE) : ";
+        cin>>store[regn].degree;
+        while(store[regn].degree!="CS"&&store[regn].degree!="SE"){
+            cout<<"Invalid Degree. Enter Again : ";
+            cin>>store[regn].degree;}
+        }else if(store[regn].faculty=="FES"){
+        cout<<"Enter degree. (EE or ES) : ";
+        cin>>store[regn].degree;
+        while(store[regn].degree!="EE"&&store[regn].degree!="ES"){
+            cout<<"Invalid Degree. Enter Again : ";
+            cin>>store[regn].degree;
+        }
+    }else if(store[regn].faculty=="FMCE"){
+        cout<<"Enter degree. (CE or MSE) : ";
+        cin>>store[regn].degree;
+        while(store[regn].degree!="CE"&&store[regn].degree!="MSE"){
+            cout<<"Invalid Degree. Enter Again : ";
+            cin>>store[regn].degree;
+        }} else if(store[regn].faculty=="FME"){
+            store[regn].degree="ME";
         }}
-   }
+        cout<<"Record edited successfully !!! "; }
+
+
+
+       
+        }
+   
     
     }
     }
@@ -175,7 +204,7 @@ void print(){
     
     }
     if(delch)
-    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<"\t  |\t  "<<store[j].faculty<<"\t  |\t"<<store[j].degree<<endl;
+    cout<<store[j].reg_no<<"    |    "<<store[j].name<<"\t |\t"<<store[j].phone<<"\t  |\t "<<store[j].faculty<<"\t  |\t"<<store[j].degree<<endl;
     
     }
     
@@ -212,7 +241,7 @@ void search(){
                 if(regno==store[z].reg_no){
                 lineprint();
                 cout<<"\nReg Number |\tName\t |\tContact\t  |\tFaculty\t  |\tDegree\n";
-                cout<<store[z].reg_no<<"    |    "<<store[z].name<<"\t |\t"<<store[z].phone<<"\t  |\t  "<<store[z].faculty<<"\t  |\t"<<store[z].degree<<endl;
+                cout<<store[z].reg_no<<"    |    "<<store[z].name<<"\t |\t"<<store[z].phone<<"\t  |\t "<<store[z].faculty<<"\t  |\t"<<store[z].degree<<endl;
     
                 reg=7;
                 }
