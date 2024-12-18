@@ -12,7 +12,7 @@ struct Student{
 };
 
 //Glpbal Vars
-    int i=0;
+    int i=2;
     Student store[100];
     int drecords[100];
     int ddd=0;
@@ -49,6 +49,7 @@ void deletez(int &ddd){
 }
 void add(){
     Student S1;
+  
     cout<<"Enter the name of Student : ";
 
     cin>>store[i].name;
@@ -321,10 +322,47 @@ cout<<"Enter P to see all student records\nEnter D to delete record\n";
 cout<<"Enter S to search for a specific student's record\nEnter X to see all deleted records\nEnter R to edit record\n";
 cout<<"Enter I to install information\nEnter E to exit";
 }
+void optionst(){
+cout<<"\nEnter P to see all student records\n";
+cout<<"Enter S to search for a specific student's record\n";
+cout<<"Enter I to install information\nEnter E to exit";
+}
 
 int main(){
+    //two records already added as samples
+        store[0].name="Zarrar";
+        store[0].degree="AI";
+        store[0].faculty="FCSE";
+        store[0].phone=345;
+        store[0].reg_no+=0+1;
+        
+        store[1].name="Hassan";
+        store[1].degree="AI";
+        store[1].faculty="FCSE";
+        store[1].phone=220;
+        store[1].reg_no+=1+1;
+        
+    
 
-string in;
+cout<<"Conrfirm your identity\nEnter 1 to enter as manager and 2 to enter as a teacher: ";
+int input;
+cin>>input;
+while(input!=1&&input!=2){
+    cout<<"Invalid input. Enter again: ";
+    cin>>input;
+}
+int inp;
+int password=786;
+if(input==1){
+    cout<<"Enter password to enter: ";
+    cin>>inp;
+    while(inp!=password){
+        cout<<"Incorrect password. Try Again. : ";
+        cin>>inp;
+    }
+    if(inp==password){
+
+        string in;
 do {
 lineprint();
 cout<<"\nWelcome to the Student Database Management System !!!\nEnter O to view available options for input\n";
@@ -357,4 +395,35 @@ else
 cout<<"Invalid";
 } while (in!="E");
 
+
+
+    } 
+
+} else if(input==2){
+
+    string inpu;
+do{
+lineprint();
+cout<<"\nWelcome to the Student Database Management System !!!\nEnter O to view available options for input\n";
+cout<<"Enter Input : ";
+
+cin>>inpu;
+while(inpu!="O"&&inpu!="P"&&inpu!="S"&&inpu!="I"&&inpu!="E"){
+    cout<<"Invalid input. Enter again: ";
+    cin>>inpu;
+}
+if(inpu=="O"){
+optionst();
+}else if(inpu=="P"){
+print();
+}else if(inpu=="I"){
+download();
+}else if(inpu=="S"){
+search();
+}else if(inpu=="E")
+return 0;
+else cout<<"Invalid";
+}while(inpu!="E");
+
+}
 }
