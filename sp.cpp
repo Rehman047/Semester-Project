@@ -137,28 +137,37 @@ void edit()
         }
 
         regn += 2025000;
-        for (int j = 0; j <= total_addedRecords - 1; j++)
-        {
-
-            delete_checker = 1;
-            for (int z = 0; z <= total_deletedRecords; z++)
-            {
-                if (store[j].reg_no == drecords[z])
-                {
-                    cout << "Record not found!\n";
-                    delete_checker = 0;
-                    return;
-                }
+        //new loops to check if record is deleted or not. To prevent entering field before ensuring record is not deleted.
+    for(int m=0;m<=total_addedRecords-1;m++){
+        for(int n=0;n<=total_deletedRecords;n++){
+            if(regn==drecords[n]){
+                cout<<"Record not found!\n";
+                return;
             }
-            if (delete_checker)
-            {
-                cout << "Enter the name of field to change : ";
+        }
+    }
+          cout << "Enter the name of field to change : ";
                 cin >> inp;
                 while (inp != "Name" && inp != "Contact" && inp != "Faculty" && inp != "Degree")
                 {
                     cout << "Invalid Field. Enter again : ";
                     cin >> inp;
                 }
+        for (int j = 0; j <= total_addedRecords - 1; j++)
+        {
+
+          //  delete_checker = 1;
+            for (int z = 0; z <= total_deletedRecords; z++)
+            {
+                if (regn== drecords[z])
+                {
+                    delete_checker = 0;
+                }
+            }
+          
+         //   if (delete_checker)
+           // {
+                
                 if (store[j].reg_no == regn)
                 {
                     regn -= 2025000;
@@ -228,7 +237,7 @@ void edit()
                     }
                     cout << "Record edited successfully !!! ";
                 }
-            }
+            //}
         }
     }
 }
@@ -287,18 +296,21 @@ void search()
             cin >> regno;
         }
     }
-    regno += 2025000;
-    for (int z = 0; z <= total_addedRecords - 1; z++)
-    {
-
-        for (int dc = 0; dc <= total_deletedRecords; dc++)
+        regno += 2025000;
+    for(int m=0;m<=total_addedRecords-1;m++){
+    for (int dc = 0; dc <= total_deletedRecords; dc++)
         {
             if (regno == drecords[dc])
             {
                 cout << "Record Not Found!";
                 return;
             }
-        }
+        }}
+
+    for (int z = 0; z <= total_addedRecords - 1; z++)
+    {
+
+        
         if (regno == store[z].reg_no)
         {
             lineprint();
@@ -378,7 +390,7 @@ void del_rec()
                 }
             }
             if (!delch)
-                cout << store[j].reg_no << "    |    " << store[j].name << "\t |\t" << store[j].phone << "\t  |\t  " << store[j].faculty << "\t  |\t" << store[j].degree << endl;
+                cout << store[j].reg_no << "    |    " << store[j].name << "\t |\t" << store[j].phone << "\t  |\t " << store[j].faculty << "\t  |\t" << store[j].degree << endl;
         }
     }
 }
