@@ -12,14 +12,14 @@ struct Student
 };
 
 // Global Vars. i variable is going to track the number of records.
-// ddd is going to track the number of deleted records
-int i = 2;
+// total_deletedRecords is going to track the number of deleted records
+int total_addedRecords = 3;
 Student store[100];
 int drecords[100];
-int ddd = 0;
+int total_deletedRecords = 0;
 int daj;
 fstream file;
-
+//Line to make output look better and presentable
 void lineprint()
 {
     cout << "\n_________________________________________________________________________________________";
@@ -31,9 +31,10 @@ int digcheck(int n)
         return 0;
     return 1 + digcheck(n / 10);
 }
-void deletez(int &ddd)
+// function to delete record
+void deletez(int &total_deletedRecords)
 {
-    if (i == 0)
+    if (total_addedRecords == 0)
     {
         cout << "No records added yet!";
         return;
@@ -41,79 +42,83 @@ void deletez(int &ddd)
     cout << "Enter the REG.No ( Only last three digits ) :  ";
     int del;
     cin >> del;
-    while (del > i || del == 0)
+//check if Reg Number is valid
+    while (del > total_addedRecords || del == 0)
     {
         cout << "Invalid Registration Number\nEnter Again : ";
         cin >> del;
     }
 
     del += 2025000;
-    drecords[ddd] = del;
-    ddd++;
+    drecords[total_deletedRecords] = del;
+    total_deletedRecords++;
     cout << "Record Deleted! ";
 }
+// function to add record
 void add()
 {
-    Student S1;
+   // Student S1;
 
     cout << "Enter the name of Student : ";
 
-    cin >> store[i].name;
+    cin >> store[total_addedRecords].name;
     cout << "Enter the Student's contact number : ";
-    cin >> store[i].phone;
-    while (digcheck(store[i].phone) != 3)
+    cin >> store[total_addedRecords].phone;
+    while (digcheck(store[total_addedRecords].phone) != 3)
     {
         cout << "Phone Number should be 3 digits only\nEnter Phone Number Again : ";
-        cin >> store[i].phone;
+        cin >> store[total_addedRecords].phone;
     }
     cout << "Enter the Student's Faculty e.g. (FCSE,FMCE,FES,FME) : ";
-    cin >> store[i].faculty;
-    while (store[i].faculty != "FCSE" && store[i].faculty != "FMCE" && store[i].faculty != "FES" && store[i].faculty != "FME")
+    cin >> store[total_addedRecords].faculty;
+    while (store[total_addedRecords].faculty != "FCSE" && store[total_addedRecords].faculty != "FMCE" && store[total_addedRecords].faculty != "FES" && store[total_addedRecords].faculty != "FME")
     {
         cout << "Invalid Faculty. Enter again : ";
-        cin >> store[i].faculty;
+        cin >> store[total_addedRecords].faculty;
     }
-    if (store[i].faculty == "FCSE")
+    if (store[total_addedRecords].faculty == "FCSE")
     {
         cout << "Enter degree. (CS or SE) : ";
-        cin >> store[i].degree;
-        while (store[i].degree != "CS" && store[i].degree != "SE")
+        cin >> store[total_addedRecords].degree;
+        while (store[total_addedRecords].degree != "CS" && store[total_addedRecords].degree != "SE")
         {
             cout << "Invalid Degree. Enter Again : ";
-            cin >> store[i].degree;
+            cin >> store[total_addedRecords].degree;
         }
     }
-    else if (store[i].faculty == "FES")
+    else if (store[total_addedRecords].faculty == "FES")
     {
         cout << "Enter degree. (EE or ES) : ";
-        cin >> store[i].degree;
-        while (store[i].degree != "EE" && store[i].degree != "ES")
+        cin >> store[total_addedRecords].degree;
+        while (store[total_addedRecords].degree != "EE" && store[total_addedRecords].degree != "ES")
         {
             cout << "Invalid Degree. Enter Again : ";
-            cin >> store[i].degree;
+            cin >> store[total_addedRecords].degree;
         }
     }
-    else if (store[i].faculty == "FMCE")
+    else if (store[total_addedRecords].faculty == "FMCE")
     {
         cout << "Enter degree. (CE or MSE) : ";
-        cin >> store[i].degree;
-        while (store[i].degree != "CE" && store[i].degree != "MSE")
+        cin >> store[total_addedRecords].degree;
+        while (store[total_addedRecords].degree != "CE" && store[total_addedRecords].degree != "MSE")
         {
             cout << "Invalid Degree. Enter Again : ";
-            cin >> store[i].degree;
+            cin >> store[total_addedRecords].degree;
         }
     }
-    else if (store[i].faculty == "FME")
+    //Assumed FME faculty only offers ME degree
+    else if (store[total_addedRecords].faculty == "FME")
     {
-        store[i].degree = "ME";
+        store[total_addedRecords].degree = "ME";
     }
-    store[i].reg_no += i + 1;
-    i++;
+    store[total_addedRecords].reg_no += total_addedRecords + 1;
+    total_addedRecords++;
     cout << "Record added successfully !!! ";
 }
+// function to edit record
 void edit()
 {
-    if (i == 0)
+    if (total_addedRecords == 0)
     {
         cout << "No record added yet.";
         return;
@@ -121,31 +126,31 @@ void edit()
     else
     {
         int regn;
-        int edch;
+        int delete_checker;
         string inp;
         cout << "Enter Registration Number : ";
         cin >> regn;
-        while (regn > i || regn == 0)
+        while (regn > total_addedRecords || regn == 0)
         {
             cout << "Invalid Reg. Number. Enter Again : ";
             cin >> regn;
         }
 
         regn += 2025000;
-        for (int j = 0; j <= i - 1; j++)
+        for (int j = 0; j <= total_addedRecords - 1; j++)
         {
 
-            edch = 1;
-            for (int z = 0; z <= ddd; z++)
+            delete_checker = 1;
+            for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
                 {
-                    cout << "Record just Deleted!\n";
+                    cout << "Record not found!\n";
+                    delete_checker = 0;
                     return;
-                    edch = 0;
                 }
             }
-            if (edch)
+            if (delete_checker)
             {
                 cout << "Enter the name of field to change : ";
                 cin >> inp;
@@ -227,10 +232,11 @@ void edit()
         }
     }
 }
+// function to print all records
 void print()
 {
 
-    if (i == 0)
+    if (total_addedRecords == 0)
     {
         cout << "No record added yet.";
         return;
@@ -243,15 +249,15 @@ void print()
         cout << "\nReg Number |\tName\t |\tContact\t  |\tFaculty\t  |\tDegree";
         lineprint();
         cout << endl;
-        for (int j = 0; j <= i - 1; j++)
+        for (int j = 0; j <= total_addedRecords - 1; j++)
         {
 
             delch = 1;
-            for (int z = 0; z <= ddd; z++)
+            for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
                 {
-                    cout << "Record just Deleted!\n";
+                   // cout << "Record just Deleted!\n";
 
                     delch = 0;
                 }
@@ -261,12 +267,12 @@ void print()
         }
     }
 }
-
+//function to search for a specific record
 void search()
 {
     int reg, regno;
     reg = 8;
-    if (i == 0)
+    if (total_addedRecords == 0)
     {
         cout << "No Record Added Yet";
         return;
@@ -275,21 +281,21 @@ void search()
     cin >> regno;
     if (digcheck(regno) > 3)
     {
-        while (digcheck(regno) > 3 || regno > i || regno == 0)
+        while (digcheck(regno) > 3 || regno > total_addedRecords || regno == 0)
         {
             cout << "Invalid Reg Number. Enter Again : ";
             cin >> regno;
         }
     }
     regno += 2025000;
-    for (int z = 0; z <= i - 1; z++)
+    for (int z = 0; z <= total_addedRecords - 1; z++)
     {
 
-        for (int dc = 0; dc <= ddd; dc++)
+        for (int dc = 0; dc <= total_deletedRecords; dc++)
         {
             if (regno == drecords[dc])
             {
-                cout << "Deleted";
+                cout << "Record Not Found!";
                 return;
             }
         }
@@ -305,10 +311,11 @@ void search()
     if (reg == 8)
         cout << "No record Found! ";
 }
+//function to download records. Uses file handling's stream to write records to a file.
 void download()
 {
 
-    if (i == 0)
+    if (total_addedRecords == 0)
     {
         cout << "No record added yet.";
         return;
@@ -321,10 +328,10 @@ void download()
 
         file << "\nReg Number |\tName\t |\tContact\t  |\tFaculty\t  |\tDegree\n";
         file << "_____________________________________________________________________________\n";
-        for (int j = 0; j <= i - 1; j++)
+        for (int j = 0; j <= total_addedRecords - 1; j++)
         {
 
-            for (int z = 0; z <= ddd; z++)
+            for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
                 {
@@ -345,23 +352,23 @@ void download()
 }
 void del_rec()
 {
-    if (i == 0)
+    if (total_addedRecords == 0)
     {
         cout << "No record added yet.";
         return;
     }
     else
     {
-        cout << "\nDeleted Records";
+        cout << "\nDeleted Records: ";
         lineprint();
         int delch = 1;
         cout << "\nReg Number |\tName\t |\tContact\t  |\tFaculty\t  |\tDegree\n";
 
-        for (int j = 0; j <= i - 1; j++)
+        for (int j = 0; j <= total_addedRecords - 1; j++)
         {
 
             delch = 1;
-            for (int z = 0; z <= ddd; z++)
+            for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
                 {
@@ -375,6 +382,7 @@ void del_rec()
         }
     }
 }
+//function to show options to manager
 void options()
 {
     cout << "\nEnter A to add record of student\n";
@@ -382,6 +390,7 @@ void options()
     cout << "Enter S to search for a specific student's record\nEnter X to see all deleted records\nEnter R to edit record\n";
     cout << "Enter I to install information\nEnter E to exit";
 }
+//function to show options to teacher
 void optionst()
 {
     cout << "\nEnter P to see all student records\n";
@@ -391,7 +400,7 @@ void optionst()
 
 int main()
 {
-    // two records already added as samples
+    // three records already added as samples. For teacher because teacher can't add records.
     store[0].name = "Zarrar";
     store[0].degree = "AI";
     store[0].faculty = "FCSE";
@@ -403,6 +412,12 @@ int main()
     store[1].faculty = "FCSE";
     store[1].phone = 220;
     store[1].reg_no += 1 + 1;
+
+    store[2].name = "Hamza";
+    store[2].degree = "CE";
+    store[2].faculty = "FMCE";
+    store[2].phone = 781;
+    store[2].reg_no += 2 + 1;
 
     cout << "Conrfirm your identity\nEnter 1 to enter as manager and 2 to enter as a teacher: ";
     int input;
@@ -416,6 +431,7 @@ int main()
     int password = 786;
     if (input == 1)
     {
+//Goto Label to allow teacher to enter as manager.
     manager:
         cout << "Enter password to enter: ";
         cin >> inp;
@@ -447,7 +463,7 @@ int main()
                 else if (in == "E")
                     return 0;
                 else if (in == "D")
-                    deletez(ddd);
+                    deletez(total_deletedRecords);
                 else if (in == "S")
                     search();
                 else if (in == "I")
@@ -499,6 +515,7 @@ int main()
                 return 0;
             else if (inpu == "W")
             {
+                //goto label to allow teacher to enter as manager. Since teacher can't add or delete records.. Manager's input should be 1
                 input = 1;
                 goto manager;
             }
