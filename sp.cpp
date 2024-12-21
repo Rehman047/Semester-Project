@@ -17,7 +17,7 @@ int total_addedRecords = 3;
 Student store[100];
 int drecords[100];
 int total_deletedRecords = 0;
-int daj;
+//int noname;
 fstream file;
 //Line to make output look better and presentable
 void lineprint()
@@ -362,7 +362,7 @@ void download()
     cout << "File Created Successfully! ";
     file.close();
 }
-void del_rec()
+void showALL_deletedRecords()
 {
     if (total_addedRecords == 0)
     {
@@ -445,6 +445,7 @@ int main()
     {
 //Goto Label to allow teacher to enter as manager.
     manager:
+    cout<<"Entering as Manager\n";
         cout << "Enter password to enter: ";
         cin >> inp;
         while (inp != password)
@@ -481,7 +482,7 @@ int main()
                 else if (in == "I")
                     download();
                 else if (in == "X")
-                    del_rec();
+                    showALL_deletedRecords();
                 else if (in == "O")
                     options();
                 else if (in == "R")
@@ -493,7 +494,7 @@ int main()
     }
     else if (input == 2)
     {
-
+cout<<"Entering as Teacher\n";
         string inpu;
         do
         {
