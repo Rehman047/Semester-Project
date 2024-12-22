@@ -2,6 +2,7 @@
 #include <fstream>
 #include <string>
 using namespace std;
+//I didn't use any getline statement because multiple words in name disturbed the structure of the table of records. I used cin instead.
 struct Student
 {
     int reg_no = 2025000;
@@ -11,25 +12,25 @@ struct Student
     string degree;
 };
 
-// Global Vars. i variable is going to track the number of records.
+// Global Vars. total_addedRecords variable is going to track the number of records.
 // total_deletedRecords is going to track the number of deleted records
-int total_addedRecords = 3;
+int total_addedRecords = 3; // 3 because 3 records are already added as samples.
 Student store[100];
 int drecords[100];
 int total_deletedRecords = 0;
-// int noname;
-// ifstream file;
+// int noname; useless variable not used anywhere
+// ifstream file; already added separately in download function
 // Line to make output look better and presentable
 void lineprint()
 {
     cout << "\n_________________________________________________________________________________________";
 }
 // recursive approach to limit the user to enetr phone number only of certain digits
-int digcheck(int n)
+int digit_checker(int n)
 {
     if (n == 0)
         return 0;
-    return 1 + digcheck(n / 10);
+    return 1 + digit_checker(n / 10);
 }
 // function to delete record
 void deletez(int &total_deletedRecords)
@@ -58,13 +59,13 @@ void deletez(int &total_deletedRecords)
 void add()
 {
     // Student S1;
-    //Input handling to prevent incorrect output
+    // Input handling to prevent incorrect output
     cout << "Enter the name of Student : ";
 
     cin >> store[total_addedRecords].name;
     cout << "Enter the Student's contact number : ";
     cin >> store[total_addedRecords].phone;
-    while (digcheck(store[total_addedRecords].phone) != 3)
+    while (digit_checker(store[total_addedRecords].phone) != 3)
     {
         cout << "Phone Number should be 3 digits only\nEnter Phone Number Again : ";
         cin >> store[total_addedRecords].phone;
@@ -149,6 +150,7 @@ void edit()
                 }
             }
         }
+        // if record is not deleted, then allow to edit
         cout << "Enter the name of field to change : ";
         cin >> inp;
         while (inp != "Name" && inp != "Contact" && inp != "Faculty" && inp != "Degree")
@@ -159,7 +161,7 @@ void edit()
         for (int j = 0; j <= total_addedRecords - 1; j++)
         {
 
-            //  delete_checker = 1;
+            //  delete_checker = 1; we have already checked if record is deleted or not. so this variable is not needed anymore
             for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (regnumber == drecords[z])
@@ -167,7 +169,7 @@ void edit()
                     delete_checker = 0;
                 }
             }
-
+            // since record is not deleted, we can now edit it
             //   if (delete_checker)
             // {
 
@@ -179,13 +181,13 @@ void edit()
                 {
                     cout << "Enter the name of Student : ";
                     cin >> store[regnumber].name;
-                    // cout<<"Record edited successfully !!! ";
+                    // cout<<"Record edited successfully !!! "; This line was added to prevent a bug. Since the bug is not present anymore, this line is not needed anymore.
                 }
                 else if (inp == "Contact")
                 {
                     cout << "Enter the Student's contact number : ";
                     cin >> store[regnumber].phone;
-                    while (digcheck(store[regnumber].phone) != 3)
+                    while (digit_checker(store[regnumber].phone) != 3)
                     {
                         cout << "Phone Number should be 3 digits only\nEnter Phone Number Again : ";
                         cin >> store[regnumber].phone;
@@ -201,6 +203,7 @@ void edit()
                         cin >> store[regnumber].faculty;
                     }
                 }
+                // if user wants to change faculty, he must also change degree because faculty and degree are related
                 if (inp == "Degree" || inp == "Faculty")
                 {
                     if (store[regnumber].faculty == "FCSE")
@@ -265,12 +268,12 @@ void print()
         {
 
             delete_checker = 1;
-              //loop to prevent deleted records
+            // loop to prevent deleted records
             for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
                 {
-                    // cout << "Record just Deleted!\n";
+                    // cout << "Record just Deleted!\n"; This line was added only for debugging purposes. It is not needed anymore.
 
                     delete_checker = 0;
                 }
@@ -284,7 +287,7 @@ void print()
 void search()
 {
     int reg, regnumber;
-    reg = 8;
+    reg = 8; // this reg variable is only used as an emergency variable to check if record is found or not. If not found, then it will print "No record found"
     if (total_addedRecords == 0)
     {
         cout << "No Record Added Yet";
@@ -292,18 +295,17 @@ void search()
     }
     cout << "Enter Reg Number (only last three digits) : ";
     cin >> regnumber;
-    
-    
-        while (digcheck(regnumber) > 3 || regnumber > total_addedRecords || regnumber == 0)
-        {
-            cout << "Invalid Reg Number. Enter Again : ";
-            cin >> regnumber;
-        }
-    
+
+    while (digit_checker(regnumber) > 3 || regnumber > total_addedRecords || regnumber == 0)
+    {
+        cout << "Invalid Reg Number. Enter Again : ";
+        cin >> regnumber;
+    }
+
     regnumber += 2025000;
     for (int m = 0; m <= total_addedRecords - 1; m++)
     {
-          //loop to prevent deleted records
+        // loop to prevent deleted records
         for (int z = 0; z <= total_deletedRecords; z++)
         {
             if (regnumber == drecords[z])
@@ -313,7 +315,7 @@ void search()
             }
         }
     }
-
+    // since record is not deleted, we can now search for it
     for (int z = 0; z <= total_addedRecords - 1; z++)
     {
 
@@ -333,7 +335,8 @@ void search()
 // function to download records. Uses file handling's stream to write records to a file.
 void download()
 {
-     ofstream file;
+
+    ofstream file;
     if (total_addedRecords == 0)
     {
         cout << "No record added yet.";
@@ -341,8 +344,8 @@ void download()
     }
     else
     {
-        //Write mode because we will overwrite existing data
-       
+        // Write mode because we will overwrite existing data
+
         file.open("database.txt");
         int delete_check;
         file << "_____________________________________________________________________________";
@@ -351,7 +354,7 @@ void download()
         file << "_____________________________________________________________________________\n";
         for (int j = 0; j <= total_addedRecords - 1; j++)
         {
-            delete_check = 1;
+            delete_check = 1; // is why line 369 is commented out
             for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
@@ -361,17 +364,17 @@ void download()
                     delete_check = 0;
                 }
             }
-            if (delete_check )
+            if (delete_check)
                 file << store[j].reg_no << "    |    " << store[j].name << "\t |\t  " << store[j].phone << "\t  |\t  " << store[j].faculty << "\t  |\t" << store[j].degree << endl;
 
-          //  delete_check++;
+            //  delete_check++;
         }
         file << "_____________________________________________________________________________";
     }
     cout << "File Created Successfully! ";
     file.close();
 }
-//function to print all deleted records
+// function to print all deleted records
 void showALL_deletedRecords()
 {
     if (total_addedRecords == 0)
@@ -390,7 +393,7 @@ void showALL_deletedRecords()
         {
 
             delete_check = 1;
-            //loop to prevent deleted records
+            // loop to allow deleted records
             for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
@@ -400,7 +403,8 @@ void showALL_deletedRecords()
                     delete_check = 0;
                 }
             }
-            if (!delete_check)
+            // in other functions, we used delete_check to prevent deleted records. Here, we are using it to show deleted records only.
+            if (!delete_check) // if delete_check is 0, then show deleted records
                 cout << store[j].reg_no << "    |    " << store[j].name << "\t |\t" << store[j].phone << "\t  |\t " << store[j].faculty << "\t  |\t" << store[j].degree << endl;
         }
     }
@@ -442,7 +446,6 @@ int main()
     store[2].phone = 781;
     store[2].reg_no += 2 + 1;
 
-
     cout << "\nWelcome to the Student Database Management System !!!\n";
     cout << "Conrfirm your identity\nEnter 1 to enter as manager and 2 to enter as a teacher: ";
     int input;
@@ -468,7 +471,7 @@ int main()
         if (inp == password)
         {
 
-            string in;
+            string in; // string because in case of char variable, if user inputs multiple characters, it will cause an unexpected output.
             do
             {
                 lineprint();
@@ -481,7 +484,7 @@ int main()
                     cout << "Enter valid character Amongst A,P,E,S,I,D,X,O,R : ";
                     cin >> in;
                 }
-
+                // did not use switch case because it does not work with strings. Used if else instead.
                 if (in == "A")
                     add();
                 else if (in == "P")
@@ -510,7 +513,7 @@ int main()
     }
     else if (input == 2)
     {
-        string inpu;
+        string inpu; // string because in case of char variable, if user inputs multiple characters, it will cause an unexpected output.
         do
         {
             lineprint();
@@ -524,6 +527,7 @@ int main()
                 cout << "Invalid input. Enter again: ";
                 cin >> inpu;
             }
+            // did not use switch case because it does not work with strings. Used if else instead.
             if (inpu == "O")
             {
                 optionst();
