@@ -18,7 +18,7 @@ Student store[100];
 int drecords[100];
 int total_deletedRecords = 0;
 // int noname;
-fstream file;
+// ifstream file;
 // Line to make output look better and presentable
 void lineprint()
 {
@@ -58,7 +58,7 @@ void deletez(int &total_deletedRecords)
 void add()
 {
     // Student S1;
-
+    //Input handling to prevent incorrect output
     cout << "Enter the name of Student : ";
 
     cin >> store[total_addedRecords].name;
@@ -125,24 +125,24 @@ void edit()
     }
     else
     {
-        int regn;
+        int regnumber;
         int delete_checker;
         string inp;
         cout << "Enter Registration Number (Only last three digits) : ";
-        cin >> regn;
-        while (regn > total_addedRecords || regn == 0)
+        cin >> regnumber;
+        while (regnumber > total_addedRecords || regnumber == 0)
         {
             cout << "Invalid Reg. Number. Enter Again : ";
-            cin >> regn;
+            cin >> regnumber;
         }
 
-        regn += 2025000;
+        regnumber += 2025000;
         // new loops to check if record is deleted or not. To prevent entering field before ensuring record is not deleted.
         for (int m = 0; m <= total_addedRecords - 1; m++)
         {
             for (int n = 0; n <= total_deletedRecords; n++)
             {
-                if (regn == drecords[n])
+                if (regnumber == drecords[n])
                 {
                     cout << "Record not found!\n";
                     return;
@@ -162,7 +162,7 @@ void edit()
             //  delete_checker = 1;
             for (int z = 0; z <= total_deletedRecords; z++)
             {
-                if (regn == drecords[z])
+                if (regnumber == drecords[z])
                 {
                     delete_checker = 0;
                 }
@@ -171,71 +171,71 @@ void edit()
             //   if (delete_checker)
             // {
 
-            if (store[j].reg_no == regn)
+            if (store[j].reg_no == regnumber)
             {
-                regn -= 2025000;
-                regn -= 1;
+                regnumber -= 2025000;
+                regnumber -= 1;
                 if (inp == "Name")
                 {
                     cout << "Enter the name of Student : ";
-                    cin >> store[regn].name;
+                    cin >> store[regnumber].name;
                     // cout<<"Record edited successfully !!! ";
                 }
                 else if (inp == "Contact")
                 {
                     cout << "Enter the Student's contact number : ";
-                    cin >> store[regn].phone;
-                    while (digcheck(store[regn].phone) != 3)
+                    cin >> store[regnumber].phone;
+                    while (digcheck(store[regnumber].phone) != 3)
                     {
                         cout << "Phone Number should be 3 digits only\nEnter Phone Number Again : ";
-                        cin >> store[regn].phone;
+                        cin >> store[regnumber].phone;
                     }
                 }
                 else if (inp == "Faculty")
                 {
                     cout << "Enter the Student's Faculty e.g. (FCSE,FMCE,FES,FME) : ";
-                    cin >> store[regn].faculty;
-                    while (store[regn].faculty != "FCSE" && store[regn].faculty != "FMCE" && store[regn].faculty != "FES" && store[regn].faculty != "FME")
+                    cin >> store[regnumber].faculty;
+                    while (store[regnumber].faculty != "FCSE" && store[regnumber].faculty != "FMCE" && store[regnumber].faculty != "FES" && store[regnumber].faculty != "FME")
                     {
                         cout << "Invalid Faculty. Enter again : ";
-                        cin >> store[regn].faculty;
+                        cin >> store[regnumber].faculty;
                     }
                 }
                 if (inp == "Degree" || inp == "Faculty")
                 {
-                    if (store[regn].faculty == "FCSE")
+                    if (store[regnumber].faculty == "FCSE")
                     {
                         cout << "Enter degree. (CS or SE) : ";
-                        cin >> store[regn].degree;
-                        while (store[regn].degree != "CS" && store[regn].degree != "SE")
+                        cin >> store[regnumber].degree;
+                        while (store[regnumber].degree != "CS" && store[regnumber].degree != "SE")
                         {
                             cout << "Invalid Degree. Enter Again : ";
-                            cin >> store[regn].degree;
+                            cin >> store[regnumber].degree;
                         }
                     }
-                    else if (store[regn].faculty == "FES")
+                    else if (store[regnumber].faculty == "FES")
                     {
                         cout << "Enter degree. (EE or ES) : ";
-                        cin >> store[regn].degree;
-                        while (store[regn].degree != "EE" && store[regn].degree != "ES")
+                        cin >> store[regnumber].degree;
+                        while (store[regnumber].degree != "EE" && store[regnumber].degree != "ES")
                         {
                             cout << "Invalid Degree. Enter Again : ";
-                            cin >> store[regn].degree;
+                            cin >> store[regnumber].degree;
                         }
                     }
-                    else if (store[regn].faculty == "FMCE")
+                    else if (store[regnumber].faculty == "FMCE")
                     {
                         cout << "Enter degree. (CE or MSE) : ";
-                        cin >> store[regn].degree;
-                        while (store[regn].degree != "CE" && store[regn].degree != "MSE")
+                        cin >> store[regnumber].degree;
+                        while (store[regnumber].degree != "CE" && store[regnumber].degree != "MSE")
                         {
                             cout << "Invalid Degree. Enter Again : ";
-                            cin >> store[regn].degree;
+                            cin >> store[regnumber].degree;
                         }
                     }
-                    else if (store[regn].faculty == "FME")
+                    else if (store[regnumber].faculty == "FME")
                     {
-                        store[regn].degree = "ME";
+                        store[regnumber].degree = "ME";
                     }
                 }
                 cout << "Record edited successfully !!! ";
@@ -265,6 +265,7 @@ void print()
         {
 
             delete_checker = 1;
+              //loop to prevent deleted records
             for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
@@ -282,7 +283,7 @@ void print()
 // function to search for a specific record
 void search()
 {
-    int reg, regno;
+    int reg, regnumber;
     reg = 8;
     if (total_addedRecords == 0)
     {
@@ -290,21 +291,22 @@ void search()
         return;
     }
     cout << "Enter Reg Number (only last three digits) : ";
-    cin >> regno;
+    cin >> regnumber;
     
     
-        while (digcheck(regno) > 3 || regno > total_addedRecords || regno == 0)
+        while (digcheck(regnumber) > 3 || regnumber > total_addedRecords || regnumber == 0)
         {
             cout << "Invalid Reg Number. Enter Again : ";
-            cin >> regno;
+            cin >> regnumber;
         }
     
-    regno += 2025000;
+    regnumber += 2025000;
     for (int m = 0; m <= total_addedRecords - 1; m++)
     {
-        for (int dc = 0; dc <= total_deletedRecords; dc++)
+          //loop to prevent deleted records
+        for (int z = 0; z <= total_deletedRecords; z++)
         {
-            if (regno == drecords[dc])
+            if (regnumber == drecords[z])
             {
                 cout << "Record Not Found!";
                 return;
@@ -315,7 +317,7 @@ void search()
     for (int z = 0; z <= total_addedRecords - 1; z++)
     {
 
-        if (regno == store[z].reg_no)
+        if (regnumber == store[z].reg_no)
         {
             cout << "\nSearch Result: ";
             lineprint();
@@ -331,7 +333,7 @@ void search()
 // function to download records. Uses file handling's stream to write records to a file.
 void download()
 {
-
+     ofstream file;
     if (total_addedRecords == 0)
     {
         cout << "No record added yet.";
@@ -339,7 +341,9 @@ void download()
     }
     else
     {
-        file.open("database.txt", ios::out);
+        //Write mode because we will overwrite existing data
+       
+        file.open("database.txt");
         int delete_check;
         file << "_____________________________________________________________________________";
 
@@ -367,6 +371,7 @@ void download()
     cout << "File Created Successfully! ";
     file.close();
 }
+//function to print all deleted records
 void showALL_deletedRecords()
 {
     if (total_addedRecords == 0)
@@ -378,23 +383,24 @@ void showALL_deletedRecords()
     {
         cout << "\nDeleted Records: ";
         lineprint();
-        int delch = 1;
+        int delete_check = 1;
         cout << "\nReg Number |\tName\t |\tContact\t  |\tFaculty\t  |\tDegree\n";
 
         for (int j = 0; j <= total_addedRecords - 1; j++)
         {
 
-            delch = 1;
+            delete_check = 1;
+            //loop to prevent deleted records
             for (int z = 0; z <= total_deletedRecords; z++)
             {
                 if (store[j].reg_no == drecords[z])
                 {
                     // cout<<"Record just Deleted!\n";
 
-                    delch = 0;
+                    delete_check = 0;
                 }
             }
-            if (!delch)
+            if (!delete_check)
                 cout << store[j].reg_no << "    |    " << store[j].name << "\t |\t" << store[j].phone << "\t  |\t " << store[j].faculty << "\t  |\t" << store[j].degree << endl;
         }
     }
